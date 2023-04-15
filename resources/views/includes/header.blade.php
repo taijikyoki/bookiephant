@@ -4,10 +4,11 @@
             <a href="/">Homepage</a>
         </div>
         
+        @role('admin')
         <div>
             <a href="/admin">Administrate</a>
         </div>
-        
+        @endrole
     </div>
 
     <div></div>

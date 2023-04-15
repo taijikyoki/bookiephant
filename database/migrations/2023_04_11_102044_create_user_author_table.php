@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('user_author', function (Blueprint $table) {
             $table->id();
+            
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
+
             $table->foreignId('author_id')
                 ->references('id')
                 ->on('authors')
                 ->cascadeOnDelete(); 
+
             $table->timestamps();
         });
     }

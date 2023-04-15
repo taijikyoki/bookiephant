@@ -30,23 +30,30 @@ class User extends Authenticatable
     public function roles() {
         return $this->belongsToMany(Role::class);
     }
-    
-    public function permissions() {
-        
-        return $this->belongsToMany(Permission::class);
-    }
 
-    public function hasRole(string $role) {
+    public function hasRole(string $roleSlug) {
 
         return $this
             ->roles
-            ->contains('slug', $role);
+            ->contains('slug', $roleSlug);
     }
 
-    public function hasPermission($permission) {
-        
+    public function addRole(string $roleSlug) {
+
+        $role = Role::where('slug', $roleSlug)->first();
+
         return $this
-            ->permissions
-            ->contains('slug', $permission);
+            ->roles()
+            ->attach($role);
     }
+
+    public function removeRole(string $roleSlug) {
+
+        $role = Role::where('slug', $roleSlug)->first();
+
+        return $this
+            ->roles()
+            ->detach($role);
+    }
+
 }

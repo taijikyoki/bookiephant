@@ -10,7 +10,6 @@
     </head>
     <body>
         @include('includes.header')
-        @yield('admintools')
         <div class='grid h-screen place-items-center'>
             @yield('content')
         </div>

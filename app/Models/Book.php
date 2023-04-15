@@ -19,13 +19,21 @@ class Book extends Model
         'year' => ''
     ];
 
-    public static function getFiltered($title = '', $year = '') {
+    public static function getFiltered($title = '', $year = '', $authorName = '', $genreName = '') {
 
         $query = Book::where('title', 'LIKE', '%'.$title.'%');
 
         if ($year != '' and is_numeric($year)) {
             $query = $query->where('release_year', '=', $year);
         }
+
+        $query = $query->whereHas('author', function($author) use($authorName) {
+            $author->where('name', 'LIKE', '%'.$authorName.'%');
+        });
+
+        $query = $query->whereHas('genres', function($genre) use($genreName) {
+            $genre->where('name', 'LIKE', '%'.$genreName.'%');
+        });
 
         return $query;
     }

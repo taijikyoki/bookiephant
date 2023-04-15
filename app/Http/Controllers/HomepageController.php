@@ -12,37 +12,14 @@ class HomepageController extends Controller {
         
         $searchByTitle = session('searchByTitle', '');
         $searchByYear = session('searchByYear', '');
+        $searchByAuthor = session('searchByAuthor', '');
+        $searchByGenre = session('searchByGenre', '');
 
-        $books = Book::getFiltered($searchByTitle, $searchByYear)->simplePaginate(5);
+        $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $searchByGenre)
+            ->simplePaginate(10);
 
         $request->session()->reflash();
 
         return view('home', get_defined_vars());
-    }
-
-    public function setFilters (Request $request) {
-        
-        $request->session()->flash('sortBy', $request->sortBy);
-        $request->session()->flash('searchByTitle', $request->title);
-        $request->session()->flash('searchByYear', $request->year);
-        
-        return redirect()->back();
-    }
-
-    public function registration () {
-        
-        $email = '';
-        $name = '';
-        $pwd = '';
-        $cpwd = '';
-        
-        return view('registration', get_defined_vars());
-    }
-
-    public function login () {
-
-        $email = '';
-        $pwd = '';
-        return view('loginpage', get_defined_vars());
     }
 }

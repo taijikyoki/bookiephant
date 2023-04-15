@@ -14,11 +14,14 @@ class AdminPanelController extends Controller {
         
         $searchByTitle = session('searchByTitle', '');
         $searchByYear = session('searchByYear', '');
+        $searchByAuthor = session('searchByAuthor', '');
+        $searchByGenre = session('searchByGenre', '');
 
-        $books = Book::getFiltered($searchByTitle, $searchByYear)->simplePaginate(5);
+        $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $searchByGenre)
+            ->simplePaginate(10);
 
         $request->session()->reflash();
 
-        return view('admin', get_defined_vars());
+        return view('admin.home', get_defined_vars());
     }
 }
