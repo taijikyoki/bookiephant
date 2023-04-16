@@ -13,7 +13,7 @@ Route::get('/', [HomepageController::class, 'show'])
     ->name('home');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', [AdminPanelController::class, 'show'])
+    Route::get('/', [AdminPanelController::class, 'showBooks'])
     ->middleware('auth')
     ->name('admin-home');
 });

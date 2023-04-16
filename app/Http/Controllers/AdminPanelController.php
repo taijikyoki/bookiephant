@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminPanelController extends Controller {
 
-    public function show (Request $request) {
+    public function showBooks (Request $request) {
 
         $sortBy = session('sortBy', 'id');
         
@@ -20,8 +20,10 @@ class AdminPanelController extends Controller {
         $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $searchByGenre)
             ->simplePaginate(10);
 
+        $request->session()->flash('administrate');
+
         $request->session()->reflash();
 
-        return view('admin.home', get_defined_vars());
+        return view('admin.books', get_defined_vars());
     }
 }

@@ -18,6 +18,8 @@ class HomepageController extends Controller {
         $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $searchByGenre)
             ->simplePaginate(10);
 
+        $request->session()->remove('administrate');
+            
         $request->session()->reflash();
 
         return view('home', get_defined_vars());
