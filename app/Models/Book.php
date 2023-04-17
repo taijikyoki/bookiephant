@@ -9,14 +9,12 @@ class Book extends Model
 {
     use HasFactory;
     
-    protected $guarded = [];
-
-    public static $sortBy = 'id';
-
-    public static $filter = [
-        'title' => '',
-        'author' => '', 
-        'year' => ''
+    protected $fillable = [
+        'title',
+        'description',
+        'author',
+        'release_year',
+        'genre',
     ];
 
     public static function getFiltered($title = '', $year = '', $authorName = '', $genreName = '') {

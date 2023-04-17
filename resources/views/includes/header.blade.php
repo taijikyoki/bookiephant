@@ -1,23 +1,24 @@
-<div class = "grid grid-cols-3 gap-3">
-    <div class = "grid grid-cols-3 gap-3">
-        <div class="text-center">
+<div class = "grid grid-cols-2 gap-2 sticky top-0 bg-white">
+    <div class = "grid grid-cols-4 gap-4 px-3">
+
+        <div>
             <a href="/">Homepage</a>
         </div>
         
         @role('admin')
         <div>
-            <a href="/admin">Administrate</a>
+            <a href="/admin/books">Manage Books</a>
+        </div>
+        <div>
+            <a href="/admin/authors">Manage Authors</a>
+        </div>
+        <div>
+            <a href="/admin/genres">Manage Genres</a>
         </div>
         @endrole
     </div>
-
-    <div></div>
     
-    <div class="grid grid-cols-3 gap-3">
-        <div></div>
-
-        <div></div>
-        
+    <div class="grid grid-cols-1 gap-1 px-3 text-right">
         <div>
             @auth
                 <label>{{auth()->user()->name}}</label>

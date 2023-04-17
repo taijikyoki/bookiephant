@@ -13,10 +13,22 @@ Route::get('/', [HomepageController::class, 'show'])
     ->name('home');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', [AdminPanelController::class, 'showBooks'])
-    ->middleware('auth')
-    ->name('admin-home');
+    Route::get('/books', [AdminPanelController::class, 'showBooks'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-books');
+
+    Route::delete('/books/delete/{id}', [BookController::class, 'destroy'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-delete-book');
+
+    Route::get('/books/create', [BookController::class, 'createPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-create-book');
 });
+    
 
 Route::get('/signin', [LoginController::class, 'show'])
     ->name('login');
@@ -31,4 +43,6 @@ Route::post('/set_filters', [BookController::class, 'setFilters']);
 Route::post('/do_register', [UserController::class, 'register']);
 
 Route::post('/do_login', [UserController::class, 'login']);
+
+Route::post('/create_book', [BookController::class, 'create']);
 

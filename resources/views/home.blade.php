@@ -3,7 +3,7 @@
 @section('title', "Book's Registry")
 
 @section('content')
-    @include('includes.filters')
+    @include('book.filters')
     @include('includes.bookstable')
     {{$books->links()}}
 @endsection
