@@ -4,9 +4,15 @@
 
 @section('content')
     <div class="w-full max-w-xs">
-        @if(session()->has('error'))
-        {{session()-get("error")}}
-        @endif
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
+                    {{$error}}
+                </div>
+                @endforeach
+            @endif
+        </div>
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method = "POST" action="/do_register">
             @csrf
             <div class="mb-4">

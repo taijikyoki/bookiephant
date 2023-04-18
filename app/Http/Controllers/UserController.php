@@ -15,10 +15,12 @@ class UserController extends Controller {
 
     public function register(Request $request) {
 
-        if ($request->name == '' or $request->pwd == '' or $request->email == '') {
-            $request->session()->flash("error", "All fields required!");
-            redirect()->back();
-        }
+        $request->validate([
+            'name'  => 'required',                       
+            'email' => 'required|email|unique:users',
+            'pwd'   => 'required',
+            'cpwd'  => 'required|same:pwd'
+        ]);
 
         $user = new User();
         $user->name = $request->name;
@@ -32,6 +34,11 @@ class UserController extends Controller {
     }
 
     public function login(Request $request) {
+
+        $request->validate([                        
+            'email' => 'required|exists:users',
+            'pwd'   => 'required',
+        ]);
 
         if ($request->pwd == '' or $request->email == '') {
             redirect()->back()->with("error", "All fields required!");

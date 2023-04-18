@@ -27,6 +27,20 @@ Route::prefix('admin')->group(function () {
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-create-book');
+
+    Route::get('/books/edit/{id}', [BookController::class, 'editPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-edit-book');
+
+    Route::post('/create_book', [BookController::class, 'create'])
+        ->middleware('auth')
+        ->middleware('admin');
+
+    Route::put('/update_book/{id}', [BookController::class, 'update'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-update-book');
 });
     
 
@@ -44,5 +58,6 @@ Route::post('/do_register', [UserController::class, 'register']);
 
 Route::post('/do_login', [UserController::class, 'login']);
 
-Route::post('/create_book', [BookController::class, 'create']);
+Route::get('/book/{id}', [BookController::class, 'showPage'])
+    ->name('show-book');
 

@@ -4,10 +4,12 @@
 
 @section('content')
     <div class="w-full max-w-xs">
-        @if (session()->has('error'))
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
-                <span class="font-bold">Error!</span> {{session()->get('error')}}
+                {{$error}}
             </div>
+            @endforeach
         @endif
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method = "POST" action="do_login">
         @csrf

@@ -15,10 +15,14 @@ class AdminPanelController extends Controller {
         $searchByTitle = session('searchByTitle', '');
         $searchByYear = session('searchByYear', '');
         $searchByAuthor = session('searchByAuthor', '');
-        $searchByGenre = session('searchByGenre', '');
+        $filterGenres = session('filterByGenres', []);
 
-        $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $searchByGenre)
+        $books = Book::getFiltered($searchByTitle, $searchByYear, $searchByAuthor, $filterGenres)
             ->simplePaginate(10);
+
+        $genres = Genre::get();
+
+        $authors = Author::get();
 
         $request->session()->flash('administrate');
 

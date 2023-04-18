@@ -17,7 +17,7 @@ class Book extends Model
         'genre',
     ];
 
-    public static function getFiltered($title = '', $year = '', $authorName = '', $genreName = '') {
+    public static function getFiltered($title = '', $year = '', $authorName = '', $filterGenres = []) {
 
         $query = Book::where('title', 'LIKE', '%'.$title.'%');
 
@@ -29,9 +29,12 @@ class Book extends Model
             $author->where('name', 'LIKE', '%'.$authorName.'%');
         });
 
-        $query = $query->whereHas('genres', function($genre) use($genreName) {
-            $genre->where('name', 'LIKE', '%'.$genreName.'%');
-        });
+        if (!empty($filterGenres)) {
+
+            $query = $query->with(['genres' => function($nquery) use ($filterGenres) {
+                $nquery->whereIn('id', array_column($filterGenres, 'value'));
+            }]);
+        }
 
         return $query;
     }

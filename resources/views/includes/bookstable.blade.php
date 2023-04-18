@@ -1,6 +1,17 @@
 @if (session()->has('success'))
-    {{session()->remove('success')}}
+    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+        {{session()->remove('success')}}
+    </div>
 @endif
+
+@role('admin')
+@if(session()->has('administrate'))
+<a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" href="{{route('admin-create-book')}}">
+    Add book
+</a>
+@endif
+@endrole
+
 <table class="border-collapse table-fixed w-full text-sm text-center">
     <thead>
         <tr>
@@ -42,7 +53,7 @@
             @if(session()->has('administrate'))
                 <td>{{$book->created_at}}</td>
                 <td class = "flex">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                    <a href="{{route('admin-edit-book', $book->id)}}" class="text-indigo-600 hover:text-indigo-900">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -50,7 +61,7 @@
                     </svg>
                     </a>
     
-                    <a href="#" class="text-gray-600 hover:text-gray-900">
+                    <a href="{{route('show-book', $book->id)}}" class="text-gray-600 hover:text-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -78,7 +89,7 @@
             
             @if(!session()->has('administrate'))
             <td class = "flex">
-                <a href="#" class="text-gray-600 hover:text-gray-900">
+                <a href="{{route('show-book', $book->id)}}" class="text-gray-600 hover:text-gray-900">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

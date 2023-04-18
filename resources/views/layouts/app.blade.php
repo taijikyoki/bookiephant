@@ -14,7 +14,7 @@
     </head>
     <body>
         @include('includes.header')
-        <div class='grid h-screen place-items-center'>
+        <div class='grid place-items-center space-y-5'>
             @yield('content')
         </div>
         @include('includes.footer')

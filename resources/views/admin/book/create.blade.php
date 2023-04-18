@@ -19,12 +19,14 @@
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
+                    {{ $error }}
+                </div>
                 @endforeach
             </ul>
         </div>
         @endif
-        <form method="POST" action="/create_book">
+        <form method="POST" action="/admin/create_book">
         @csrf
         <div>
             <label class="block text-sm font-bold text-gray-700" for="title">
@@ -92,10 +94,10 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Add
             </button>
-            <button type=""
+            <a href="{{route('admin-books')}}"
             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Cancel
-            </button>
+            </a>
         </div>
         </form>
     </div>
