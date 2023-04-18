@@ -9,11 +9,11 @@ use App\Http\Controllers\RegistrationController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomepageController::class, 'show'])
+Route::get('/', [BookController::class, 'showBooksCommon'])
     ->name('home');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/books', [AdminPanelController::class, 'showBooks'])
+    Route::get('/books', [BookController::class, 'showBooksAdmin'])
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-books');

@@ -31,9 +31,9 @@ class Book extends Model
 
         if (!empty($filterGenres)) {
 
-            $query = $query->with(['genres' => function($nquery) use ($filterGenres) {
-                $nquery->whereIn('id', array_column($filterGenres, 'value'));
-            }]);
+            $query = $query->whereHas('genres', function($q) use ($filterGenres) {
+                $q->whereIn('genre_id', $filterGenres);
+            });
         }
 
         return $query;

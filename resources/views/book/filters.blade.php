@@ -1,13 +1,12 @@
 <form action="/set_filters" method="POST">
     @csrf
     <div class="flex text-center mt-6">
-        <div class = "grow-0">
+        <div class = "grow min-w-[10%]">
             <label for="sortBy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sort by</label>
             <select name="sortBy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">    
                 <option value="id">ID</option>
                 <option value="title">Title</option>
                 <option value="release_year">Year</option>
-                <option value="author">Author</option>
             </select>
         </div>
         
