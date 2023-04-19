@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;

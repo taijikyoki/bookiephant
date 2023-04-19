@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\AuthorController;
+use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\GenreController;
+
+use App\Http\Resources\BookResource;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +20,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// if registered as author
+Route::post('/author/get_token', [AuthorController::class, 'get_token']);
+
+// if not registered
+Route::post('/author/reg_token', [AuthorController::class, 'register']);
+
+Route::group(['as' => 'api.'], function () {
+  Route::get('/books', function () {
+    return BookResource::collection(Book::all());
+  });
+  //   ->middleware(['auth:sanctum', 'abilities:author']);
+});
+
+Route::middleware('auth:sanctum')->get('/name', function (Request $request) {
+  return response()->json(['name' => $request->user()->name]);
 });
