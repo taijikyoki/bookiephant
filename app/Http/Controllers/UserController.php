@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,11 +27,34 @@ class UserController extends Controller {
         $user->name = $request->name;
         $user->password = Hash::make($request->pwd);
         $user->email = $request->email;
+
         $user->save();
 
-        auth()->login($user);
+        if (!$request->is_author) {
+
+            auth()->login($user);
+
+            return redirect()->away('/');
+        }
+
+        $request->validate([
+            'name' => 'unique:authors',
+        ]);
+
+        $user->addRole('author');
+
+        $user->createToken('author', ['author']);
+
+        $userAuthor = new Author();
+        $userAuthor->name = $user->name;
+        $userAuthor->save();
+
+        $user->author()->associate($userAuthor);
+
+        $user->save();
 
         return redirect()->away('/');
+
     }
 
     public function login(Request $request) {

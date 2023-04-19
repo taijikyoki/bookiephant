@@ -39,7 +39,11 @@
                 </label>
                 <input class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="cpwd" type="password" placeholder="******************" required>
             </div>
-            <div class="flex items-center justify-between">
+            <div class="flex">
+                <input type="checkbox" id="is_author" name="is_author">
+                <label for="is_author" class = "px-2">I am the author</label>
+            </div>
+            <div class="flex items-center justify-between py-6">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Sign Up
                 </button>

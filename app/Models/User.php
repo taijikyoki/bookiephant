@@ -27,18 +27,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles() {
+    public function author () {
+        return $this->belongsTo(Author::class);
+    }
+
+    public function roles () {
         return $this->belongsToMany(Role::class);
     }
 
-    public function hasRole(string $roleSlug) {
+    public function hasRole (string $roleSlug) {
 
         return $this
             ->roles
             ->contains('slug', $roleSlug);
     }
 
-    public function addRole(string $roleSlug) {
+    public function addRole (string $roleSlug) {
 
         $role = Role::where('slug', $roleSlug)->first();
 
@@ -47,7 +51,7 @@ class User extends Authenticatable
             ->attach($role);
     }
 
-    public function removeRole(string $roleSlug) {
+    public function removeRole (string $roleSlug) {
 
         $role = Role::where('slug', $roleSlug)->first();
 
