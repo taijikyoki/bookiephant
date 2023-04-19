@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller {
 
@@ -79,6 +80,8 @@ class BookController extends Controller {
             $book->genres()->attach($genre);
         }
 
+        Log::info("Created new book: " . $book->title);
+
         return redirect()
             ->route('admin-books')
             ->with('success','Book created successfully.');
@@ -115,6 +118,10 @@ class BookController extends Controller {
             $book->genres()->attach($genre);
         }
 
+        Log::info('Book ' . $book->id . ' updated', [
+            'title' => $book->title,
+        ]);
+
         return redirect()
             ->route('admin-books')
             ->with('success','Book updated successfully');
@@ -123,8 +130,12 @@ class BookController extends Controller {
     public function destroy($id) {
 
         $book = Book::find($id);
+
+        $id = $book->id;
         
         $book->delete();
+
+        Log::info('Book ' . $book->id . ' deleted');
 
         return redirect()
             ->back()

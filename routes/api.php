@@ -33,6 +33,6 @@ Route::group(['as' => 'api.'], function () {
   //   ->middleware(['auth:sanctum', 'abilities:author']);
 });
 
-Route::middleware('auth:sanctum')->get('/name', function (Request $request) {
-  return response()->json(['name' => $request->user()->name]);
+Route::middleware('auth:sanctum')->get('/books/{id}', function (Request $request, $id) {
+  return BookResource::make(Book::find($id));
 });
