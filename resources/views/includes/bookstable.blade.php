@@ -51,7 +51,7 @@
             <td>{{$book->publishing_type}}</td>
             @role('admin')
             @if(session()->has('administrate'))
-                <td>{{$book->created_at}}</td>
+                <td>{{date('d.m.Y', strtotime($book->created_at))}}</td>
                 <td class = "flex">
                     <a href="{{route('admin-edit-book', $book->id)}}" class="text-indigo-600 hover:text-indigo-900">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminPanelController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
@@ -18,29 +20,87 @@ Route::prefix('admin')->group(function () {
         ->middleware('admin')
         ->name('admin-books');
 
+    Route::get('/genres', [GenreController::class, 'showGenresAdmin'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-genres');
+
+    Route::get('/authors', [AuthorController::class, 'showAuthorsAdmin'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-authors');
+
     Route::delete('/books/delete/{id}', [BookController::class, 'destroy'])
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-delete-book');
+    
+    Route::delete('/genres/delete/id/{id}', [GenreController::class, 'destroy'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-delete-genre');
+
+    Route::delete('/authors/delete/id/{id}', [AuthorController::class, 'destroy'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-delete-author');
 
     Route::get('/books/create', [BookController::class, 'createPage'])
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-create-book');
 
-    Route::get('/books/edit/{id}', [BookController::class, 'editPage'])
+    Route::get('/genres/create', [GenreController::class, 'createPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-create-genre');
+
+    Route::get('/authors/create', [AuthorController::class, 'createPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-create-author');
+
+    Route::get('/books/edit/id/{id}', [BookController::class, 'editPage'])
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-edit-book');
+    
+    Route::get('/genres/edit/id/{id}', [GenreController::class, 'editPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-edit-genre');
+
+    Route::get('/authors/edit/id/{id}', [AuthorController::class, 'editPage'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-edit-author');
 
     Route::post('/create_book', [BookController::class, 'create'])
         ->middleware('auth')
         ->middleware('admin');
+    
+    Route::post('/create_genre', [GenreController::class, 'create'])
+        ->middleware('auth')
+        ->middleware('admin');
+    
+    Route::post('/create_author', [AuthorController::class, 'create'])
+        ->middleware('auth')
+        ->middleware('admin');
 
-    Route::put('/update_book/{id}', [BookController::class, 'update'])
+    Route::put('/update_book/id/{id}', [BookController::class, 'update'])
         ->middleware('auth')
         ->middleware('admin')
         ->name('admin-update-book');
+
+    Route::put('/update_genre/id/{id}', [GenreController::class, 'update'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-update-genre');
+
+    Route::put('/update_author/id/{id}', [AuthorController::class, 'update'])
+        ->middleware('auth')
+        ->middleware('admin')
+        ->name('admin-update-author');
 });
     
 

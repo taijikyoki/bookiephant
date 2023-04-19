@@ -44,9 +44,18 @@
                 {{ $book->publishing_type }}
             </div>
         </div>
-        <div class="pull-right pt-2">
-            <a href="{{route('home')}}"
-            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"> Back</a>
+        <div class = "flex pt-4">
+            <div class="pull-right">
+                <a href="{{route('home')}}"
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"> Back</a>
+            </div>
+            @role('admin')
+            <div class="pull-right px-2">
+                <a href="{{route('admin-books')}}"
+                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"> Back admin</a>
+            </div>
+            @endrole
         </div>
+
     </div>
 @endsection

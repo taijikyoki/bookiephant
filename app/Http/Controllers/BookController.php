@@ -87,8 +87,8 @@ class BookController extends Controller {
     public function update (Request $request, $id) {
 
         $request->validate([
-            'title' => 'required',
-            'year' => 'required',
+            'title' => 'required|unique:books, title, {$book->id}|max:255',
+            'year' => 'required|numeric',
             'author' => 'required',
             'genres' => 'required',
             'publishing_type' => 'required',
@@ -133,7 +133,7 @@ class BookController extends Controller {
 
     public function showBooksAdmin (Request $request) {
 
-        $sortBy = session('sortBy', 'id');
+        $sortBy = session('sortBy', 'title');
         
         $searchByTitle = session('searchByTitle', '');
         $searchByYear = session('searchByYear', '');
@@ -155,7 +155,7 @@ class BookController extends Controller {
     }
 
     public function showBooksCommon (Request $request) {
-        $sortBy = session('sortBy', 'id');
+        $sortBy = session('sortBy', 'title');
         
         $searchByTitle = session('searchByTitle', '');
         $searchByYear = session('searchByYear', '');
