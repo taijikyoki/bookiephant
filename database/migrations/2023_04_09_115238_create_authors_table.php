@@ -12,11 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')
                     ->unique();
-            $table->foreignId('user_id')
-                ->nullable()
-                ->references('id')
-                ->on('users')
-                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

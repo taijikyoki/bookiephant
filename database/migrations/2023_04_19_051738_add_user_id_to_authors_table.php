@@ -11,20 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_author', function (Blueprint $table) {
-            $table->id();
-            
+        Schema::table('authors', function (Blueprint $table) {
             $table->foreignId('user_id')
+                ->nullable()
                 ->references('id')
                 ->on('users')
                 ->cascadeOnDelete();
-
-            $table->foreignId('author_id')
-                ->references('id')
-                ->on('authors')
-                ->cascadeOnDelete(); 
-
-            $table->timestamps();
         });
     }
 
@@ -33,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_author');
+        Schema::table('authors', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
 };

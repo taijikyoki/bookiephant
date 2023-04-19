@@ -50,8 +50,12 @@ class UserController extends Controller {
         $userAuthor->save();
 
         $user->author()->associate($userAuthor);
+        $userAuthor->user()->associate($user);
 
+        $userAuthor->save();
         $user->save();
+
+        auth()->login($user);
 
         return redirect()->away('/');
 
