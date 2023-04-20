@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\GenreController;
 
+use App\Http\Resources\BookCollection;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -33,6 +34,8 @@ Route::group(['as' => 'api.'], function () {
   //   ->middleware(['auth:sanctum', 'abilities:author']);
 });
 
-Route::middleware('auth:sanctum')->get('/books/{id}', function (Request $request, $id) {
-  return BookResource::make(Book::find($id));
+Route::middleware('auth:sanctum')->get('/books', function (Request $request) {
+  $book = Book::paginate(5);
+
+  return new BookCollection($book);
 });

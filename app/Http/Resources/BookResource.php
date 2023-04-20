@@ -17,10 +17,10 @@ class BookResource extends JsonResource
         return [
             'id'    => $this->id,
             'title' => $this->title,
-            'author'=> $this->author,
-            'genres'=> array_column($this->genres, 'value'),
-            'year'  => $this->release_year,
-            'type'  => $this->publishing_type,
+            'author'=> $this->author->name,
+            // 'genres'=> $this->genres,
+            // 'year'  => $this->release_year,
+            // 'type'  => $this->publishing_type,
         ];
     }
 }
