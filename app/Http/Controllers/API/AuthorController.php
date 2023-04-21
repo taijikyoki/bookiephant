@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthorController extends Controller {
     
@@ -70,13 +71,70 @@ class AuthorController extends Controller {
      
         $user = User::where('email', $request->email)->first();
      
-        if (!$user || !Hash::check($request->pwd, $user->password)) {
-            return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
+        if (!$user || !Hash::check($request->pwd, $user->password) || !$user->hasRole('author')) {
+            return response()->json(['error' => 'The provided credentials are incorrect or user is not author.'], 401);
         }
      
         return response()->json([
             'name'  => $user->name,
             'token' => $user->createToken('author', ['author'])->plainTextToken
         ]);
+    }
+
+    public function list (Request $request) {
+
+        $authors = Author::paginate(3);
+
+        return AuthorResource::collection($authors);
+    }
+
+    public function show (Request $request, int $id) {
+
+        $author = Author::find($id);
+
+        if (!$author) {
+            return [
+                'error' => 'author not found',
+            ];
+        }
+
+        return [
+            'id'    => $author->id,
+            'name'  => $author->name,
+            'books' => $author->books,
+        ];
+    }
+
+    public function update (Request $request, int $id) {
+    
+        $author = Author::find($id);
+    
+        if (!$author) {
+          return [
+            'error' => 'author not found',
+          ];
+        }
+
+        if (PersonalAccessToken::findToken($request->bearerToken())->tokenable->author != $author) {
+            return [
+                'error' => 'you are not selected author',
+            ];
+        }
+    
+        $validator = Validator::make($request->all(), [
+          'name' => 'unique:authors, name, {$author->id}',
+        ]);    
+        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        $author->name = $request->name ? $request->name : $author->name;
+
+        $author->save();
+
+        return [
+            'success' => 'author successfully updated',
+        ];
     }
 }

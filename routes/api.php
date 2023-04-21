@@ -28,14 +28,26 @@ Route::post('/author/get_token', [AuthorController::class, 'get_token']);
 Route::post('/author/reg_token', [AuthorController::class, 'register']);
 
 Route::group(['as' => 'api.'], function () {
-  Route::get('/books', function () {
-    return BookResource::collection(Book::all());
-  });
-  //   ->middleware(['auth:sanctum', 'abilities:author']);
-});
+  Route::get('/books/{id}', [BookController::class, 'show']);
 
-Route::middleware('auth:sanctum')->get('/books', function (Request $request) {
-  $book = Book::paginate(5);
+  Route::get('/books', [BookController::class, 'list']);
 
-  return new BookCollection($book);
+  Route::get('/authors', [AuthorController::class, 'list']);
+
+  Route::get('/authors/{id}', [AuthorController::class, 'show']);
+
+  Route::get('/genres', [GenreController::class, 'list']);
+
+  Route::middleware(['auth:sanctum', 'abilities:author'])
+    ->group(function () {
+
+      Route::delete('books/{id}', [BookController::class, 'destroy'])
+      ->middleware(['auth:sanctum', 'abilities:author']);
+   
+      Route::put('books/{id}', [BookController::class, 'update'])
+       ->middleware(['auth:sanctum', 'abilities:author']);
+      
+      Route::put('authors/{id}', [AuthorController::class, 'update'])
+       ->middleware(['auth:sanctum', 'abilities:author']);
+    });
 });

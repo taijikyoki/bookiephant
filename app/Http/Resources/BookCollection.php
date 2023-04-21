@@ -5,16 +5,14 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class BookCollection extends ResourceCollection
-{
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @return array<int|string, mixed>
-     */
+class BookCollection extends ResourceCollection {
+
     public function toArray(Request $request): array {
+        
         return [
-            'books' => $this->collection,
+            'books' => [
+                $this->collection,
+            ],
         ];
     }
 }

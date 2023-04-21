@@ -80,7 +80,9 @@ class BookController extends Controller {
             $book->genres()->attach($genre);
         }
 
-        Log::info("Created new book: " . $book->title);
+        Log::info('Book created', [
+            'book' => $book,
+        ]);
 
         return redirect()
             ->route('admin-books')
@@ -118,8 +120,8 @@ class BookController extends Controller {
             $book->genres()->attach($genre);
         }
 
-        Log::info('Book ' . $book->id . ' updated', [
-            'title' => $book->title,
+        Log::info('Book updated', [
+            'book' => $book,
         ]);
 
         return redirect()
@@ -135,7 +137,7 @@ class BookController extends Controller {
         
         $book->delete();
 
-        Log::info('Book ' . $book->id . ' deleted');
+        Log::info('Book id=' . $book->id . ' deleted');
 
         return redirect()
             ->back()
