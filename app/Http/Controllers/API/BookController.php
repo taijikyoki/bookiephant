@@ -4,10 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookCollection;
+
 use App\Models\Book;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+
 use Laravel\Sanctum\PersonalAccessToken;
 
 class BookController extends Controller {

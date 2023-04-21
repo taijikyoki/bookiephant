@@ -4,10 +4,6 @@ use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\GenreController;
 
-use App\Http\Resources\BookCollection;
-use App\Http\Resources\BookResource;
-use App\Models\Book;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

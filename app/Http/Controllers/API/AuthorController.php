@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Resources\AuthorResource;
+
 use App\Models\Author;
 use App\Models\User;
+
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthorController extends Controller {
