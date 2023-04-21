@@ -41,13 +41,16 @@ Route::group(['as' => 'api.'], function () {
   Route::middleware(['auth:sanctum', 'abilities:author'])
     ->group(function () {
 
-      Route::delete('books/{id}', [BookController::class, 'destroy'])
-      ->middleware(['auth:sanctum', 'abilities:author']);
+      Route::delete('books/{id}', [BookController::class, 'destroy']);
+      //->middleware(['auth:sanctum', 'abilities:author']);
    
-      Route::put('books/{id}', [BookController::class, 'update'])
-       ->middleware(['auth:sanctum', 'abilities:author']);
+      Route::put('books/{id}', [BookController::class, 'update']);
+       //->middleware(['auth:sanctum', 'abilities:author']);
+
+      Route::post('books/create', [BookController::class, 'create']);
+       //->middleware(['auth:sanctum', 'abilities:author']);
       
-      Route::put('authors/{id}', [AuthorController::class, 'update'])
-       ->middleware(['auth:sanctum', 'abilities:author']);
+      Route::put('authors/{id}', [AuthorController::class, 'update']);
+       //->middleware(['auth:sanctum', 'abilities:author']);
     });
 });

@@ -97,7 +97,7 @@ class BookController extends Controller {
             $book->description = $request->description;
         }
     
-        $book->release_year = $request->year ? $request->year : $book->year;
+        $book->release_year = $request->year ? $request->year : $book->release_year;
     
         $book->publishing_type = $request->publishing_type ? $request->publishing_type : $book->publishing_type;
     
@@ -119,5 +119,47 @@ class BookController extends Controller {
           'success' => 'book '. $id . ' successfully updated',
         ];
     
+    }
+
+    public function create (Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|unique:books|max:255',
+            'year' => 'required|numeric',
+            'genres' => 'required',
+            'publishing_type' => 'required',
+          ]);    
+          
+          if ($validator->fails()) {
+              return response()->json(['error' => $validator->errors()], 401);
+          }
+
+        $book = new Book();
+        
+        $book->title = $request->title;
+        if ($request->description != '') {
+            $book->description = $request->description;
+        }
+
+        $book->author()->associate(PersonalAccessToken::findToken($request->bearerToken())->tokenable->author);
+
+        $book->release_year = $request->year;
+
+        $book->publishing_type = $request->publishing_type;
+
+        $book->save();
+
+        foreach ($request->genres as $genre) {
+            $book->genres()->attach($genre);
+        }
+
+        Log::info('Book created', [
+            'book' => $book,
+        ]);
+
+        return [
+            'success' => 'book successfully created',
+            'book' => $book,
+        ];
     }
 }
